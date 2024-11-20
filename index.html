@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviator Game</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #87CEEB; /* Sky blue background */
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+       .area{
+         padding: 50px;
+         background-color: grey;
+         height: 200px;
+         width: 150px;
+         align-items: centre;
+         border: none;
+         border-radius: 10px;
+         
+       }
+        #plane {
+            width: 100px;
+            height: 50px;
+          font-size:100px;
+            display: none;
+            position: centre;
+          transform: translate(-50%, -50%);
+            border-radius: 10px;
+          margin-bottom: 200px;
+          position: absolute;
+        }
+        #controls {
+            margin-top: 20px;
+          margin-left: 20px;
+           background-color: green;
+          justify-content: space-between;
+          padding: 15px;
+          
+        }
+           #multiplier{
+             margin-top: 100px;
+             background-color: transparent;
+             font-weight: bold;
+           }
+          #startBtn{
+            background-color: yellow;
+            height: 40px;
+            width: 100px;
+            border: none;
+            border-radius: 10px;
+            margin-right: 20px;
+          }
+         #stopBtn{
+           background-color: red;
+           height: 40px;
+           width: 100px;
+           border: none;
+           border-radius: 10px;
+           margin-left: 20px;
+         }
+       
+    </style>
+</head>
+<body>
+  <div class="area">
+    <div id="plane">✈️</div>
+  </div>
+    <div id="multiplier"><h2>Multiplier: 1.0X</h2></div>
+    <div id="controls">
+        <button id="startBtn">Start</button>
+        <button id="stopBtn">Stop</button>
+    </div>
+
+    <script>
+        let multiplier = 1.0;
+        let interval;
+        let planeVisible = false;
+
+        const plane = document.getElementById('plane');
+        const multiplierDisplay = document.getElementById('multiplier');
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+
+        startBtn.addEventListener('click', () => {
+            clearInterval(interval);
+            multiplier = 1;
+            planeVisible = true;
+            plane.style.display = 'block';
+            multiplierDisplay.textContent = 'Multiplier: 1.0X';
+
+            interval = setInterval(() => {
+                multiplier += 0.1;
+                multiplierDisplay.textContent = `Multiplier: ${multiplier.toFixed(1)}X`;
+
+                // Randomly make the plane disappear
+                if (Math.random() < 0.2) { // 20% chance to disappear
+                    plane.style.display = 'none';
+                    planeVisible = false;
+                  alert(`Game Over! You lost:KES ${multiplier.toFixed(1) * 10}`) * 100;
+                plane.style.display = 'none';
+                  clearInterval(interval);
+                } else {
+                    plane.style.display = 'block';
+                    planeVisible = true;
+                }
+            }, 1000);
+        });
+
+        stopBtn.addEventListener('click', () => {
+            clearInterval(interval);
+            if (planeVisible) {
+                alert(`Congratulations! You won KES: ${multiplier.toFixed(1) * 10}`) * 100;
+                plane.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
